@@ -21,28 +21,28 @@ New settings menu looks like following
 
 ![Settings image](https://raw.githubusercontent.com/sthamster/dso-quad-logic/refs/heads/master/pics/LOGIC003.BMP)
 
-Use **`<`** and `**>**` ("Navigation") rotating switch to select menu item. Use `**-**` and `**+**` rotating switch to change item value. White menu color means that the selected value is the current active one. Grey color means the selected value is not applied yet. To apply/save selected value press "Navigation" rotating switch. 
+Use `<` and `>` ("Navigation") rotating switch to select menu item. Use `-` and `+` rotating switch to change item value. White menu color means that the selected value is the current active one. Grey color means the selected value is not applied yet. To apply/save selected value press "Navigation" rotating switch. 
 
-`**CH(A/B) range**` allows to select input channels A and B voltage range<br>
-`**Save**` allows to select format of data to be written: VCD or RAW (see below)<br>
-`**Memory Dump**` creates (surprise!) memory dump for debugging purposes<br>
-`**Out frq**` allows to control internal signal generator ("Wave Out port") frequency<br>
+`CH(A/B) range` allows to select input channels A and B voltage range<br>
+`Save` allows to select format of data to be written: VCD or RAW (see below)<br>
+`Memory Dump` creates (surprise!) memory dump for debugging purposes<br>
+`Out frq` allows to control internal signal generator ("Wave Out port") frequency<br>
 
 Data formats:<br>
-`**VCD**` is ready to be used by many signal analyzing applications. DS203 v2.7 flash drive (8MB) is capable to accept less than 1000 signal transitions/sec and is big enough to keep about 3 minutes of events at that rate<br>
-`**RAW**` allows to cope with about 3000 signal transitions/sec and to keep about 11 minutes of events at that rate. Yet you have to use [decode-raw.py](https://raw.githubusercontent.com/sthamster/dso-quad-logic/refs/heads/master/decode-raw.py) application to convert RAW data into VCD<br>
+`VCD` is ready to be used by many signal analyzing applications. DS203 v2.7 flash drive (8MB) is capable to accept less than 1000 signal transitions/sec and is big enough to keep about 3 minutes of events at that rate<br>
+`RAW` allows to cope with about 3000 signal transitions/sec and to keep about 11 minutes of events at that rate. Yet you have to use [decode-raw.py](https://raw.githubusercontent.com/sthamster/dso-quad-logic/refs/heads/master/decode-raw.py) application to convert RAW data into VCD<br>
 
 During the normal operations:<br>
-First (counting from the left side, usually marked as `**||>**` or `**play/pause**`) button clears RAM buffer and restarts data capture (and interrupts signal storing to the flash drive if it is currently running).<br>
-Second (`**[]**` or `**square**` or `**stop**`) button starts (if not yet running) or stops (if write is ongoing) data capture to the flash drive.<br>
+First (counting from the left side, usually marked as `||>` or `play/pause`) button clears RAM buffer and restarts data capture (and interrupts signal storing to the flash drive if it is currently running).<br>
+Second (`[]` or `square` or `stop`) button starts (if not yet running) or stops (if write is ongoing) data capture to the flash drive.<br>
 
 Background data writing is implemented using double buffering approach. There are two RAM buffers allocated. Only the first one is attached to a viewport. Both of them are used to capture data events and to store data to the flash disk one after another.
 
 The new status line meaning:<br>
-`**Pos**` shows the current displayed position in a first RAM buffer<br>
-`**Buf**` shows how much of the active RAM buffer is filled up with data<br>
-`**RAM**` shows the remaining application RAM size<br>
-`**Dsk**` shows disk write status. First digit is the active buffer (`**0**` - first, `**1**` - second). Second character is the disk write status: `**'-'**` writing is not active. `**'@'**` writing is activated. `**'W'**` writing is ongoing. The last number is the amount of data written to the flash disk related to the disk size since the app start. Beware, that DSO API does not provide application with actual disk free size and this number is just a rough estimation only for the current session, assuming that the disk was empty at start.<br>
+`Pos` shows the current displayed position in a first RAM buffer<br>
+`Buf` shows how much of the active RAM buffer is filled up with data<br>
+`RAM` shows the remaining application RAM size<br>
+`Dsk` shows disk write status. First digit is the active buffer (`0` - first, `1` - second). Second character is the disk write status: `'-'` writing is not active. `'@'` writing is activated. `'W'` writing is ongoing. The last number is the amount of data written to the flash disk related to the disk size since the app start. Beware, that DSO API does not provide application with actual disk free size and this number is just a rough estimation only for the current session, assuming that the disk was empty at start.<br>
 
 
 
