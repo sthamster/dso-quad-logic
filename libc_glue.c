@@ -4,7 +4,12 @@
 
 #include "stm32f10x.h"
 
-size_t stdout_write(FILE *stream, const char *ptr, size_t size)
+size_t _fread(void *ptr, size_t size, FILE *stream)
+{
+    return 0;
+}
+
+size_t _fwrite(const void *ptr, size_t size, FILE *stream)
 {
     // Everything to USART1
     size_t i;
@@ -17,14 +22,3 @@ size_t stdout_write(FILE *stream, const char *ptr, size_t size)
     
     return i;
 }
-
-static const struct File_methods stdout_methods = {
-    stdout_write,
-    NULL
-};
-
-static const struct File _stdout = {&stdout_methods};
-FILE* const stdout = (FILE*)&_stdout;
-FILE* const stderr = (FILE*)&_stdout;
-
-

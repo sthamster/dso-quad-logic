@@ -33,7 +33,7 @@ struct signal_buffer_t
     // Storage for the time-deltas and levels.
     // Not marked volatile because the valid bytes never change after initial
     // write.
-    uint8_t storage[25000];
+    uint8_t storage[7400];
 };
 
 class DSOSignalStream: public SignalStream {
@@ -55,6 +55,8 @@ public:
     virtual DSOSignalStream* clone() const;
     
     static const int frequency = 500000;
+
+	bool was_last_event() const { return previous_was_last; }
     
 private:
     size_t read_pos; // Next position to be read

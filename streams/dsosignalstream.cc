@@ -21,7 +21,7 @@ void DSOSignalStream::seek(signaltime_t time)
     {
         // Estimate how long we would have to seek, so whether it is better
         // to seek from start.
-        size_t bytes_to_seek = time * read_pos / previous_event.end;
+        size_t bytes_to_seek = (size_t)(time * read_pos / previous_event.end);
         if (bytes_to_seek < read_pos - bytes_to_seek)
         {
             read_pos = 0;

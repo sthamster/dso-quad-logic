@@ -36,7 +36,7 @@ OD      = arm-none-eabi-objdump
 CFLAGS += -mcpu=cortex-m3 -mthumb -mno-thumb-interwork
 
 # Optimization & debug settings
-CFLAGS += -fno-common -O1 -g
+CFLAGS += -fno-common -O2 -g
 
 # Compiler warnings
 CFLAGS += -Wall -Werror -Wno-unused
@@ -63,7 +63,7 @@ build/$(NAME).elf: ${_OBJS} baselibc/libc.a
 	$(CXX) $(CFLAGS) $(CXXFLAGS) $(LFLAGS) -o $@ ${_OBJS} ${LIBS}
 
 # Rebuild all objects if a common header changes
-$(_OBJS): DS203/*.h Makefile dependencies
+$(_OBJS): DS203/*.h Makefile dependencies makesvnrevision
 
 # C files
 
@@ -109,6 +109,11 @@ build:
 	mkdir -p build
 
 dependencies: baselibc libfixmath build
+
+.PHONY: makesvnrevision
+makesvnrevision:
+	./make-rev.sh . rev.h
+
 
 # Installing
 

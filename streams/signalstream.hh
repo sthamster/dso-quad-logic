@@ -16,6 +16,9 @@ typedef uint32_t frequency_t;
 
 struct SignalEvent: public Event
 {
+
+	SignalEvent() { levels = old_levels = 0; }
+	virtual ~SignalEvent() {}
     // Values before the transition. Same as the .levels in previous event,
     // included here for convenience of signal parsers.
     signals_t old_levels;

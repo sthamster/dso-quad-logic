@@ -231,7 +231,7 @@ static u16 pCluster[3];
 static u32 pDirAddr[1];
 // Err.. something somewhere is writing past SecBuff, and I'm quite sure it is
 // not my code. Allocating a bit more than 512 bytes for that purpose.
-static u8 SecBuff[600];
+static u8 SecBuff[4096];
 static uint32_t file_length;
 static uint32_t secbuff_pos;
 static uint32_t sector_count;
@@ -289,7 +289,7 @@ void _fputc(char c)
     SecBuff[secbuff_pos++] = c;
     file_length++;
     
-    if (secbuff_pos >= 512)
+    if (secbuff_pos >= 4096)
     {
         secbuff_pos = 0;
         sector_count++;
@@ -300,25 +300,15 @@ void _fputc(char c)
     }
 }
 
-size_t file_write(FILE *stream, const char *ptr, size_t size)
+// Hackish
+typedef void (*putcf) (void *, char);
+void tfp_format(void *putp, putcf putf, const char *fmt, va_list va);
+
+// Wrapper of _fputc for tinyprintf.
+static void file_putp(void *p, char c)
 {
-    size_t i;
-    char *p = (char*)ptr;
-    for (i = 0; i < size; i++)
-    {
-        _fputc(*p++);
-    }
-    
-    return i;
+    _fputc(c);
 }
-
-static const struct File_methods file_methods = {
-    file_write,
-    NULL
-};
-
-static const struct File _current_file = {&file_methods};
-FILE* const current_file = (FILE*)&_current_file;
 
 // Close the currently open file. Checks the error status and returns false
 // if any error has occurred since opening the file.
@@ -331,7 +321,7 @@ bool _fclose()
     while (secbuff_pos != 0) _fputc(' ');
     
     file_ok = false;
-    int status = __CloseFile(SecBuff, sector_count * 512, pCluster, pDirAddr);
+    int status = __CloseFile(SecBuff, sector_count * 4096, pCluster, pDirAddr);
     return status == 0;
 }
 
@@ -341,7 +331,7 @@ int _fprintf(const char *fmt, ...)
     uint32_t first_length = file_length;
     va_list va;
     va_start(va, fmt);
-    vfprintf(current_file, fmt, va);
+    tfp_format(NULL, file_putp, fmt, va);
     va_end(va);
     
     return file_length - first_length;
