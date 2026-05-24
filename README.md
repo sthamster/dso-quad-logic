@@ -21,7 +21,7 @@ New settings menu looks like following
 
 ![Settings image](https://raw.githubusercontent.com/sthamster/dso-quad-logic/refs/heads/master/pics/LOGIC003.BMP)
 
-Use `**<**` and `**>**` ("Navigation") rotating switch to select menu item. Use `**-**` and `**+**` rotating switch to change item value. White menu color means that the selected value is the current active one. Grey color means the selected value is not applied yet. To apply/save selected value press "Navigation" rotating switch. 
+Use **`<`** and `**>**` ("Navigation") rotating switch to select menu item. Use `**-**` and `**+**` rotating switch to change item value. White menu color means that the selected value is the current active one. Grey color means the selected value is not applied yet. To apply/save selected value press "Navigation" rotating switch. 
 
 `**CH(A/B) range**` allows to select input channels A and B voltage range<br>
 `**Save**` allows to select format of data to be written: VCD or RAW (see below)<br>
